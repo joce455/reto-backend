@@ -1,6 +1,7 @@
 package microservice.operations;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,25 +18,29 @@ import microservice.models.ClienteWithExtraInfo;
 public class Operations implements IClientOperations {
 
 	@Value("${minimo.esperanza}")
-	int minimoesperanzavida;
+	private int minimoesperanzavida;
 
 	@Value("${maximo.esperanza}")
-	int maximoesperanzavida;
+	private int maximoesperanzavida;
+
+	
+
+	List<Cliente> clientes = new ArrayList<>();
 
 	@Override
-	public double getPromData(List<Cliente> listaClientes) {
-		return listaClientes.stream().mapToDouble((x) -> x.getEdad()).summaryStatistics().getAverage();
+	public double getPromData() {
+		return clientes.stream().mapToDouble((x) -> x.getEdad()).summaryStatistics().getAverage();
 	}
 
 	@Override
-	public double getVarEstandarData(List<Cliente> listaClientes, double promedio) {
-		return Math.sqrt((listaClientes.stream().mapToDouble((x) -> Math.pow((x.getEdad() - promedio), 2)).sum())
-				/ listaClientes.size());
+	public double getVarEstandarData(double promedio) {
+		return Math.sqrt(
+				(clientes.stream().mapToDouble((x) -> Math.pow((x.getEdad() - promedio), 2)).sum()) / clientes.size());
 	}
 
 	@Override
-	public List<ClienteWithExtraInfo> getDetailsClients(List<Cliente> listaClientes) {
-		return listaClientes.stream().map(x -> getClientExtra(x)).collect(Collectors.toList());
+	public List<ClienteWithExtraInfo> getDetailsClients() {
+		return clientes.stream().map(x -> getClientExtra(x)).collect(Collectors.toList());
 	}
 
 	public ClienteWithExtraInfo getClientExtra(Cliente c) {
@@ -53,4 +58,29 @@ public class Operations implements IClientOperations {
 		return clientExtra;
 	}
 
+	@Override
+	public int addClient(int edad, String nombre, String apellido, LocalDate fechaNacimiento) {
+
+		Cliente cliente = new Cliente(edad, nombre, apellido, fechaNacimiento);
+
+		clientes.add(cliente);
+		
+		return clientes.size();
+	}
+
+	public int getMinimoesperanzavida() {
+		return minimoesperanzavida;
+	}
+
+	public void setMinimoesperanzavida(int minimoesperanzavida) {
+		this.minimoesperanzavida = minimoesperanzavida;
+	}
+
+	public int getMaximoesperanzavida() {
+		return maximoesperanzavida;
+	}
+
+	public void setMaximoesperanzavida(int maximoesperanzavida) {
+		this.maximoesperanzavida = maximoesperanzavida;
+	}
 }

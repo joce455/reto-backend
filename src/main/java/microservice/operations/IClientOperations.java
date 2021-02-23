@@ -1,14 +1,18 @@
 package microservice.operations;
 
+import java.time.LocalDate;
 import java.util.List;
-
-import microservice.models.Cliente;
 import microservice.models.ClienteWithExtraInfo;
 
 public interface IClientOperations {
-	public double getPromData(List<Cliente> listaClientes);
+	
+	public int addClient(int edad,String nombre,String apellido, LocalDate fechaNacimiento);
+	
+	public double getPromData();
 
-	public double getVarEstandarData(List<Cliente> listaClientes, double promedio);
+	public double getVarEstandarData(double promedio);
 
-	public List<ClienteWithExtraInfo> getDetailsClients(List<Cliente> listaClientes);
+	public List<ClienteWithExtraInfo> getDetailsClients();
+	
+	
 }
