@@ -1,6 +1,5 @@
-# [Proyecto]
+# Reto back-end
 
-Reto back-end
 
 Disponible en: [Heroku](https://dashboard.heroku.com/apps) page.<br>
 
