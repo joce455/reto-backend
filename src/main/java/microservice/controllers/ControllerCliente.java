@@ -36,7 +36,7 @@ public class ControllerCliente {
 		log.info("Creando cliente...");
 
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body("Result operation:" + "Cliente agregado con exito" +
+				.body("Result operation: " + "Cliente agregado con exito" +
 		         "\nTotal clientes: " + operations.addClient(edad, nombre, apellido, fechaNacimiento));
 	}
 

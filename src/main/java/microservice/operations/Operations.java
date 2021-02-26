@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,12 @@ public class Operations implements IClientOperations {
 
 	
 
-	List<Cliente> clientes = new ArrayList<>();
+	private List<Cliente> clientes;
+	
+	@PostConstruct
+    public void init() {
+      this.clientes=new ArrayList<>();
+    }
 
 	@Override
 	public double getPromData() {
